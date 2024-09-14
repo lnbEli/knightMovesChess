@@ -1,0 +1,20 @@
+{
+  "name": "knightmoveschess",
+  "version": "1.0.0",
+  "description": "How many moves does it take to get from one place on the board to another.",
+  "main": "knightMoves.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lnbEli/knightMovesChess.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lnbEli/knightMovesChess/issues"
+  },
+  "homepage": "https://github.com/lnbEli/knightMovesChess#readme"
+}
