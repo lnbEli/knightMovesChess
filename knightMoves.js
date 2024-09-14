@@ -8,10 +8,8 @@
 //Find shortest path between node/square and ending square
 //Output full path
 
-//function to build adjacency list for 64 squares
-//First build board with square number and its coord
-
 export default function knightMoves() {
+  //First build board with square number and its coord
   function buildBoardWithCoords() {
     //Number each square between 0- 63
     // let count = 0;
@@ -23,6 +21,7 @@ export default function knightMoves() {
     return board;
   }
 
+  //function to build adjacency list for 64 squares
   function createAdjacencyList(boardCoords) {
     const adjacencyList = [];
     boardCoords.forEach((coord, index, array) => {
@@ -68,6 +67,7 @@ export default function knightMoves() {
     return adjacencyList;
   }
 
+  //Returns index of Coord in board. Used to navigate adjacencyList.
   function findIndexOfCoords(coords) {
     const coordsString = JSON.stringify(coords);
     const board = buildBoardWithCoords();
@@ -80,4 +80,4 @@ export default function knightMoves() {
   return { adjacencyList, boardOfCoords, findIndexOfCoords };
 }
 
-//Function with algo to search fasted possible root from square/node/coord to other
+//Function with algo to search fasted possible root from square/node/coord to other. Breath first BFS is better for shortest path
