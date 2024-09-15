@@ -28,39 +28,45 @@ export default function knightMoves() {
       const x = JSON.parse(coord)[0];
       const y = JSON.parse(coord)[1];
       //create adjacencyList entry
-      adjacencyList[index] = [];
+      // adjacencyList[index] = [];
+      adjacencyList[index] = {
+        neighbours: [],
+        previousSteps: [],
+        coord: [x, y],
+      };
+
       //Does board coords include possible move coord
       //Check upRight Two up one right
       if (array.includes(`[${x + 1},${y + 2}]`)) {
-        adjacencyList[index].push([x + 1, y + 2]);
+        adjacencyList[index].neighbours.push([x + 1, y + 2]);
       }
       //check upleft
       if (array.includes(`[${x - 1},${y + 2}]`)) {
-        adjacencyList[index].push([x - 1, y + 2]);
+        adjacencyList[index].neighbours.push([x - 1, y + 2]);
       }
       //check rightUP
       if (array.includes(`[${x + 2},${y + 1}]`)) {
-        adjacencyList[index].push([x + 2, y + 1]);
+        adjacencyList[index].neighbours.push([x + 2, y + 1]);
       }
       //check leftUP
       if (array.includes(`[${x - 2},${y + 1}]`)) {
-        adjacencyList[index].push([x - 2, y + 1]);
+        adjacencyList[index].neighbours.push([x - 2, y + 1]);
       }
       //check rightDown
       if (array.includes(`[${x + 2},${y - 1}]`)) {
-        adjacencyList[index].push([x + 2, y - 1]);
+        adjacencyList[index].neighbours.push([x + 2, y - 1]);
       }
       //check leftDown
       if (array.includes(`[${x - 2},${y - 1}]`)) {
-        adjacencyList[index].push([x - 2, y - 1]);
+        adjacencyList[index].neighbours.push([x - 2, y - 1]);
       }
       //check downLeft
       if (array.includes(`[${x - 1},${y - 2}]`)) {
-        adjacencyList[index].push([x - 1, y - 2]);
+        adjacencyList[index].neighbours.push([x - 1, y - 2]);
       }
       //check downright
       if (array.includes(`[${x + 1},${y - 2}]`)) {
-        adjacencyList[index].push([x + 1, y - 2]);
+        adjacencyList[index].neighbours.push([x + 1, y - 2]);
       }
     });
 
