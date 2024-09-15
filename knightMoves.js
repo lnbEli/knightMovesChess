@@ -12,7 +12,6 @@ export default function knightMoves() {
   //First build board with square number and its coord
   function buildBoardWithCoords() {
     //Number each square between 0- 63
-    // let count = 0;
     const board = [];
     //Create coords for each numbered square
     for (let i = 0; i < 8; i++) {
@@ -28,15 +27,14 @@ export default function knightMoves() {
       const x = JSON.parse(coord)[0];
       const y = JSON.parse(coord)[1];
       //create adjacencyList entry
-      // adjacencyList[index] = [];
       adjacencyList[index] = {
         neighbours: [],
-        previousSteps: [],
         coord: [x, y],
       };
 
       //Does board coords include possible move coord
       //Check upRight Two up one right
+      //Easier to search if array is in string form
       if (array.includes(`[${x + 1},${y + 2}]`)) {
         adjacencyList[index].neighbours.push([x + 1, y + 2]);
       }
@@ -73,17 +71,27 @@ export default function knightMoves() {
     return adjacencyList;
   }
 
-  //Returns index of Coord in board. Used to navigate adjacencyList.
-  function findIndexOfCoords(coords) {
-    const coordsString = JSON.stringify(coords);
-    const board = buildBoardWithCoords();
-    return board.indexOf(coordsString);
-  }
-
   const boardOfCoords = buildBoardWithCoords();
   const adjacencyList = createAdjacencyList(boardOfCoords);
 
-  return { adjacencyList, boardOfCoords, findIndexOfCoords };
+  //Returns neighbours of Coord. Used to navigate adjacencyList.
+  function returnNeighboursOfCoords(coords) {
+    const x = coords[0];
+    const y = coords[1];
+    let neighbours;
+    adjacencyList.forEach((element) => {
+      if (element.coord[0] === x && element.coord[1] === y) {
+        neighbours = [...element.neighbours];
+      }
+    });
+    return neighbours;
+  }
+
+  return {
+    adjacencyList,
+    boardOfCoords,
+    returnNeighboursOfCoords,
+  };
 }
 
 //Function with algo to search fasted possible root from square/node/coord to other. Breath first BFS is better for shortest path

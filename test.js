@@ -1,61 +1,34 @@
 import knightMoves from "./knightMoves.js";
 
 function searchStepsToCoord(start, end, queue = []) {
-  let startCoordsIndex;
   if (Array.isArray(start)) {
-    if (start[0] === end[0] && start[1] === end[1]) {
-      return start;
-    }
-    //Find index of adjacencyList start coords
-    startCoordsIndex = knightMoves().findIndexOfCoords([start[0], start[1]]);
-  }
-  //If object passed
-  if (start.coord) {
-    if (start.coord[0] === end[0] && start.coord[1] === end[1]) {
-      start.previousSteps.push(end);
-      return start.previousSteps;
-    }
-    //Find index of adjacencyList start coords
-    startCoordsIndex = knightMoves().findIndexOfCoords([
-      start.coord[0],
-      start.coord[1],
-    ]);
+    start = { coord: start, previousSteps: [] };
   }
 
-  //Find adjacent coords
-  const adjList = knightMoves().adjacencyList[startCoordsIndex];
+  //Base case. If start coords equal end coords return objects previousSteps Array
+  if (start.coord[0] === end[0] && start.coord[1] === end[1]) {
+    //Adds final step to previous steps array
+    start.previousSteps.push(end);
+    return start.previousSteps;
+  }
 
-  //Add adjacent coords to queue
-  const arrayOfNeighbours = [...adjList.neighbours];
+  const arrayOfNeighbours = knightMoves().returnNeighboursOfCoords([
+    start.coord[0],
+    start.coord[1],
+  ]);
 
   arrayOfNeighbours.forEach((neighbour) => {
-    //Doesnt have the details!!
-    let previousSteps;
-    if (start.coord) {
-      previousSteps = [...start.previousSteps];
-    } else {
-      previousSteps = [...start];
-    }
-
-    previousSteps.push(adjList.coord);
+    const previousSteps = [...start.previousSteps];
+    previousSteps.push([start.coord[0], start.coord[1]]);
     const obj = { coord: neighbour, previousSteps: previousSteps };
     queue.push(obj);
   });
 
   const newStartCoord = queue.shift();
-  console.log(newStartCoord);
 
   return searchStepsToCoord(newStartCoord, end, queue);
 }
 
-const arrayOfResults = searchStepsToCoord([7, 7], [1, 1]);
+const arrayOfResults = searchStepsToCoord([4, 3], [2, 5]);
 
-// // console.log(arrayOfResults);
-// const results = [];
-
-// for (let i = arrayOfResults.length - 1; i >= 0; i = i - 2) {
-//   results.push([arrayOfResults[i], arrayOfResults[i - 1]]);
-// }
-
-// console.log(results);
 console.log(arrayOfResults);
