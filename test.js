@@ -1,3 +1,3 @@
-import knightMoves from "./knightMoves.js";
+import findShortestKnightPath from "./knightMoves.js";
 
-console.log(knightMoves([7, 7], [7, 1]));
+console.log(findShortestKnightPath([7, 7], [7, 1]));

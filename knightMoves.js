@@ -1,11 +1,11 @@
-export default function knightMoves(startSquare, endSquare) {
+export default function findShortestKnightPath(startSquare, endSquare) {
   //Create board
-  const board = buildBoardWithCoords();
+  const board = generateChessBoardCoordinates();
   //Create adjacency list for board
-  const adjacencyList = createAdjacencyList(board);
+  const adjacencyList = buildKnightMovesGraph(board);
 
   //Build board matrix
-  function buildBoardWithCoords() {
+  function generateChessBoardCoordinates() {
     const board = [];
     //Number each square between 0- 63 a coordinate
     for (let i = 0; i < 8; i++) {
@@ -18,7 +18,7 @@ export default function knightMoves(startSquare, endSquare) {
   }
 
   //function to build adjacency list for all 64 squares of the board
-  function createAdjacencyList(board) {
+  function buildKnightMovesGraph(board) {
     const adjacencyList = [];
     board.forEach((coord, index, array) => {
       const x = JSON.parse(coord)[0];
@@ -69,7 +69,7 @@ export default function knightMoves(startSquare, endSquare) {
 
   //Returns neighbours of coord/square.
   //Used to navigate adjacencyList.
-  function returnNeighboursOfCoords(coords, adjacencyList) {
+  function getValidKnightMoves(coords, adjacencyList) {
     const [x, y] = coords;
     const foundElement = adjacencyList.find(
       (obj) => obj.coord[0] === x && obj.coord[1] === y
@@ -79,7 +79,7 @@ export default function knightMoves(startSquare, endSquare) {
 
   //Returns least amount steps to get from one square to another.
   //Breadth first BFS is better for shortest path.
-  function searchStepsToCoord(start, end, queue = []) {
+  function findShortestPathBFS(start, end, queue = []) {
     //Base case. If start coords equal end coords return objects previousSteps Array
     if (start.coord[0] === end[0] && start.coord[1] === end[1]) {
       //Adds final step to previous steps array
@@ -87,7 +87,7 @@ export default function knightMoves(startSquare, endSquare) {
       return start.previousSteps;
     }
     //Create array of Neighbours for start coord/square
-    const arrayOfNeighbours = returnNeighboursOfCoords(
+    const arrayOfNeighbours = getValidKnightMoves(
       [start.coord[0], start.coord[1]],
       adjacencyList
     );
@@ -105,10 +105,11 @@ export default function knightMoves(startSquare, endSquare) {
     //Remove item from queue
     const newStartObject = queue.shift();
     //Recursive call with new start obj/coords
-    return searchStepsToCoord(newStartObject, end, queue);
+    return findShortestPathBFS(newStartObject, end, queue);
   }
 
-  return searchStepsToCoord(
+  //Return search function.
+  return findShortestPathBFS(
     { coord: startSquare, previousSteps: [] },
     endSquare
   );
